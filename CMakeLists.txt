@@ -19,6 +19,7 @@ set(XDNA_COMPONENT "amdxdna" CACHE STRING "XDNA component name")
 include(${CMAKE_CURRENT_SOURCE_DIR}/CMake/xrt.cmake)
 # version.cmake create XRT_PLUGIN_VERSION_STRING
 include(${CMAKE_CURRENT_SOURCE_DIR}/CMake/version.cmake)
+include_directories(/usr/include/libdrm)
 
 # For saving all built artifacts for quick testing purpose
 # Should be redirected/prefixed by DESTDIR in make command line
@@ -26,6 +27,10 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/CMake/version.cmake)
 set(XDNA_BIN_DIR /bins)
 
 add_subdirectory(src)
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(LIBDRM REQUIRED libdrm)
+include_directories(${LIBDRM_INCLUDE_DIRS})
 
 # By default, build/build.sh downloads binaries to build/amdxdna_bins/
 set(AMDXDNA_BINS_DIR ${CMAKE_BINARY_DIR}/../amdxdna_bins)

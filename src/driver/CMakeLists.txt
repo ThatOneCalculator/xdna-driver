@@ -9,6 +9,12 @@ set(XDNA_DRV_PATH ${CMAKE_BINARY_DIR}/driver/${XDNA_DRV_TGT})
 set(XDNA_DRV_BLD_DIR driver/${XDNA_DRV_DIR})
 set(XDNA_DRV_BLD_SRC ${CMAKE_CURRENT_BINARY_DIR}/${XDNA_DRV_BLD_DIR})
 set(XDNA_DRV_BLD_TGT ${CMAKE_CURRENT_BINARY_DIR}/${XDNA_DRV_DIR})
+
+include_directories(/usr/include/libdrm)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(LIBDRM REQUIRED libdrm)
+include_directories(${LIBDRM_INCLUDE_DIRS})
+
 # Common flags used for both building driver and configuring dkms
 if (DEFINED ENV{XDNA_DRV_BLD_FLAGS})
   set(XDNA_DRV_BLD_FLAGS_DKMS $ENV{XDNA_DRV_BLD_FLAGS})
